@@ -9,10 +9,9 @@
 <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <div id="app">
-       
     </div>
     <script>
-        const vm = Vue.createApp({
+        const app = Vue.createApp({
             data(){
                 return {
                     counter: 0,
@@ -25,7 +24,25 @@
                     styles: {
                         backgroundColor: "#eca1a6"
                     },
-                    username: ""
+                    username: "",
+                    posts: [
+                        {
+                            title: "Titulo 1",
+                            description: "Lorem ipsum..."
+                        },
+                        {
+                            title: "Titulo 2",
+                            description: "Lorem ipsum..."
+                        },
+                        {
+                            title: "Titulo 3",
+                            description: "Lorem ipsum..."
+                        },
+                        {
+                            title: "Titulo 4",
+                            description: "Lorem ipsum..."
+                        }
+                    ]
                 }
             },
             methods: {
@@ -66,58 +83,82 @@
                 }
             },
                 //  v-on:submit.prevent="increment"
-            template: `<img v-bind:src="img" v-bind:alt="img" height=150px>
-                        <form>
-                            <button v-on:click.prevent="increment" >+</button>
-                            <p>{{counter}}</p>
-                            <button v-on:click.prevent="decrement">-</button>
-                        </form>
+            template: `
+                            <img v-bind:src="img" v-bind:alt="img" height=150px>
+                            <form>
+                                <button v-on:click.prevent="increment" >+</button>
+                                <p>{{counter}}</p>
+                                <button v-on:click.prevent="decrement">-</button>
+                            </form>
+                            
                         
-                       
-                         <input type="text" 
-                            @input="input"
-                            :value="text" >
-                          <div>
-                            <p>{{fullName}}</p>
-                            <p> {{today}}</p>
-                          </div>
-                           <div class="container" :class="{'open': isOpen, 'closed': !isOpen}"> 
-                            <h2>{{text}}</h2>
-                            <button @click="isOpen =!isOpen">{{label}}</button>
-                        </div>
-                           <div class="container" :class="{'open': isOpen, 'closed': !isOpen}"> 
-                            <h2>{{text}}</h2>
-                            <span v-if="isOpen"> Hola, {{username}} </span>
-                            <div v-if="isOpen">
-                                 <label for=""></label>
-                                 <input type="text">
+                            <input type="text" 
+                                @input="input"
+                                :value="text" >
+                            <div>
+                                <p>{{fullName}}</p>
+                                <p> {{today}}</p>
                             </div>
-                            <button @click="isOpen =!isOpen">
-                                <span v-if="!isOpen"> Ingresar</span>
-                                <span v-else> Cerrar</span>
-                            </button>
-                        </div>
+                            <div class="container" :class="{'open': isOpen, 'closed': !isOpen}"> 
+                                <h2>{{text}}</h2>
+                                <button @click="isOpen =!isOpen">{{label}}</button>
+                            </div>
+                            <div class="container" :class="{'open': isOpen, 'closed': !isOpen}"> 
+                                <h2>{{text}}</h2>
+                                <div v-if="isOpen" class="wrapper-card">
+                                    <p> Hola, {{username}} </p>
+                                    <div class="list" >
+                                        <item v-for="(item, i) in posts" 
+                                            :key="i" 
+                                            :post="item"
+                                        />
+                                    </div>
+                                </div>
+                                
+                                <div v-if="!isOpen">
+                                    <label> Username</label>
+                                    <input type="text" v-model="username">
+                                </div>
+                                <button @click="isOpen =!isOpen">
+                                    <span v-if="!isOpen"> Ingresar</span>
+                                    <span v-else> Cerrar</span>
+                                </button>
+                            </div>
                         `
-        }).mount("#app")
-        console.log(vm);
+        })
+
+        app.component("item", {
+            props: ["post"],
+            template: `  <div class="item">
+                            <span class="title">{{post.title}}</span>
+                            <p>{{post.description}}</p>
+                        </div>`
+        })
+
+        const vm = app.mount("#app")
         // <div class="container" :style="styles"> 
     </script>
-   <style>
+   <style scoped>
     html, body {
         /* height: 100vh; */
         /* margin: 0; */
         font-family: Arial, Helvetica, sans-serif;
+     
     }
+
+    #app{
+        width: 100%;
+    }
+
     #app .container {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
         padding: 20px;
-        margin: 10px;
-        /* width: 100%;
-        height: 100%; */
+        gap: 10px;  
     }
+
     .container button {
         margin-top: 24px;
         border: none;
@@ -126,11 +167,70 @@
         border-radius: 12px;
         cursor: pointer;
     }
+
     .closed {
         background-color: #eca1a6;
     }
+
+    .wrapper-card{
+        width: 100%;
+    }
+
     .open {
         background-color: #b5e7a0;
+    }
+
+    .list {
+      display: flex;
+      flex-direction: column;
+    }
+
+
+    .item, form {
+      border: solid 1px #e5e5e5;
+      border-radius: 12px;
+      background: white;
+      padding: 8px 12px;
+      margin: 8px 0;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      /* width: 100%; */
+    }
+
+    input, textarea {
+      margin: 8px 0;
+      padding: 8px;
+      border-radius: 5px;
+      border: solid 1px #e5e5e5;
+    }
+
+    .title-holder {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+    }
+
+    .btn-delete {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 0;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+    }
+
+    .btn-submit {
+      background-color: #000000;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
     }
 </style>
 </body>
