@@ -1,0 +1,60 @@
+<template>
+    <div>
+      <input
+        type="text"
+        :value="value" 
+        @input="updateValue($event.target.value)" 
+        :class="{'invalid':hasError}"
+      /> <!-- :value es el prop(comunicacion de padre a hijo) 
+              @input se utiliza para escuchar el evento "input" en un elemento de entrada de datos.
+              Cuando se dispara el evento "input" (por ejemplo, cuando el usuario escribe en un campo de entrada), 
+              se ejecutará updateValue en la directiva v-on:input
+              -->
+      <span v-if="hasError" class="error-message">{{errorMessage}}</span>
+    </div>
+  </template>
+  
+  
+  <script>
+    export default {
+        name: 'CustomImput',
+        data(){
+          return{
+            error: false,
+            errorMessage: ''
+          }
+        },
+  
+        props: ['value'],
+        methods:{
+          updateValue(newValue){
+            //Logica de la validacion
+            if(newValue.length > 10){
+              this.error = true;
+              this.errorMessage = 'El texto no puede tener mas de 10 caracteres'
+            }else{
+              this.error = false;
+              this.errorMessage = ''
+              this.$emit('update',newValue)  /* Este input es el nombre del evento personalizado que se le pasa al padre */
+            }
+          }
+        },
+  
+        computed:{
+          hasError(){
+            return this.error && this.errorMessage !== ''
+          }
+        }
+        
+    };
+  </script>
+  
+  <style>
+    .invalid {
+      border-color: red;
+    }
+    .error-message {
+      color: red;
+      font-size: 12px;
+    }
+  </style>

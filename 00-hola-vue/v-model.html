@@ -1,0 +1,45 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <div id="app"></div>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return {
+                    text: "Hola Vue"
+                }
+            },
+        
+            template: `
+                <div>
+                    <p>{{text}}</p>
+                    <v-input1 v-model:value="text"/>
+                </div>
+            `
+        })
+
+        app.component("v-input1", {
+            props: {
+                value: String
+            },
+            methods: {
+                updateInput1(e){
+                    console.log(e.target.value);
+                    
+                    this.$emit("update:value", e.target.value )
+                }
+            },
+            template: `<input type="text" :value="value" @:input="updateInput1"> `
+        })
+
+        const vm = app.mount("#app")
+    </script>
+
+</body>
+</html>

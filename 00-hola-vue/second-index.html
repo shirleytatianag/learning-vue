@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Second document</title>
+</head>
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <div id="app"></div>
+   
+    <script>
+        const app = Vue.createApp({
+            template: `
+                <div>
+                    <v-layout>
+                        <template v-slot:header>
+                            <button>Titulo</button>
+                        </template>
+                        <template v-slot:content>
+                            <p>Alog</p>
+                        </template>
+
+
+                    </v-layout>
+                </div>
+            `
+        })
+
+        app.component("v-layout", {
+            template: 
+                `
+                <header> 
+                    <slot name=header></slot>
+                </header>
+                <div>
+                    <slot name="content"></slot>    
+                </div>
+                `
+        })
+
+        const vm = app.mount("#app")
+    </script>
+</body>
+</html>
