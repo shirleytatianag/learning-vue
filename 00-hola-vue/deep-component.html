@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <div id="app"></div>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return {
+                   text: "Hola Vue",
+                   hora: "d"
+                }
+            },
+            provide(){
+               return{
+                    otroTexto: this.hora
+               }
+            },
+
+            template: `
+                <div> {{ text }} </div>
+                <v-otro/>
+            `
+        })
+
+        app.component("v-otro", {
+            template: `<tercer/>`
+        })
+
+        app.component("tercer", {
+            inject: {
+                otroTexto: {
+                    from: "otroTexto",
+                },
+            },
+            template: '<div>{{otroTexto}}</div>'
+        })
+
+        const vm = app.mount("#app")
+    </script>
+
+</body>
+</html>
