@@ -2,7 +2,9 @@
     <div class="common-layout">
       <el-container>
         <el-header class="header">
-            
+            <div>
+                
+            </div>
         </el-header>
         <el-container>
           <el-aside class="aside" width="200px">Aside = 0</el-aside>
@@ -19,14 +21,15 @@
         height: 100vh;
     }         
     .header{
-        background-color: rgb(255, 230, 230);
+        border: 1px solid rgb(177, 177, 177);
     }
 
     .aside{
-        background-color: aqua;
+        border-left: 1px solid rgb(177, 177, 177);
+
     }
 
     .main{
-        background-color: rgb(119, 0, 255);
+        background-color: rgb(233, 233, 233);
     }
 </style>
