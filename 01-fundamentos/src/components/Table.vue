@@ -85,10 +85,25 @@ const handleDelete = (index, row) => {
       </template>
     </el-table-column>
   </el-table>
+  <!-- <el-drawer v-model="visible" :show-close="false">
+    <template #header="{ close, titleId, titleClass }">
+      <h4 :id="titleId" :class="titleClass">Edita tu producto</h4>
+      <el-button type="danger" @click="close">
+        <el-icon class="el-icon--left"><CircleCloseFilled /></el-icon>
+        Close
+      </el-button>
+    </template>
+    This is drawer content.
+  </el-drawer> -->
 </template>
 
 <script>
+import { CircleCloseFilled } from '@element-plus/icons-vue'
+
 export default {
+  components: {
+    CircleCloseFilled,
+  },
   props: {
     tableData: {
       type: Array,
@@ -102,6 +117,7 @@ export default {
   data() {
     return {
       search: '',
+      visible: false
     };
   },
   computed: {
@@ -114,6 +130,8 @@ export default {
   methods: {
     handleEdit(index, row) {
       console.log('Editar', index, row);
+      // this.visible = true;
+      this.$emit('emitEdit', {visible: true, index: index, row: row})
     },
     handleDelete(index, row) {
       console.log('Eliminar', index, row);

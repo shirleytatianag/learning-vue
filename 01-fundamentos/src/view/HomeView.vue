@@ -9,13 +9,13 @@
           <el-aside class="aside" width="65px">
             <div class="menu">
               <el-tooltip  effect="light" content="Usuarios" placement="right">
-                <RouterLink class="option" active-class="active" to="user" >
-                   <em class="icon-user"></em>
+                <RouterLink class="option" active-class="active"  to="user"  @click="handleIcon('user')">
+                  <el-icon ><UserFilled /></el-icon>
                 </RouterLink>
                </el-tooltip>
                <el-tooltip  effect="light" content="Productos" placement="right">
-                <RouterLink to="product" class="option" active-class="active">
-                    <em class="icon-clipboard"></em>
+                <RouterLink to="product" class="option" active-class="active" @click="handleIcon('product')">
+                    <em class="icon-clipboard-f"></em>
                 </RouterLink>
                </el-tooltip>
             </div>
@@ -27,6 +27,24 @@
       </el-container>
     </div>
 </template>
+
+<script>
+  import { User, UserFilled  } from '@element-plus/icons-vue'
+  import { RouterLink } from 'vue-router'
+
+
+  export default{
+
+    components:{
+      User, UserFilled 
+    },
+    methods:{
+      handleIcon(link){
+        console.log(link);
+      }
+    }
+  }
+</script>
 
 <style scoped>
 
@@ -70,6 +88,7 @@
       border-radius: 50%;
       cursor: pointer;
       text-decoration: none;
+      color: white;
 
       &:hover{
         background-color: #ffffff5c;
@@ -77,15 +96,15 @@
       }
     }
 
-    .option em{
-      font-size: 20px;
+    em {
+      font-size: 19px;
       font-weight: 500;
-      color: white;
     }
 
     .active{
       background-color: #ffffff5c;
       color: #786ee1;
     }
+
 
 </style>
